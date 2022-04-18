@@ -110,9 +110,9 @@ FUNCTION {bst.bysame.definition.jp}
 % Editor にも適用。日本語文献は関係なし。#0 か #1 か #2 を選択可。
 %
 FUNCTION {bst.author.name}
-{ #0 }	  % (default)
+% { #0 }	  % (default)
 % { #1 }
-% { #2 }
+{ #2 }
 
 % [#0 のケース] これ普通の経済学風。
 % Fujita, Masahisa, Paul R. Krugman, and Anthony J. Venables. 
@@ -149,8 +149,8 @@ FUNCTION {bst.sei.mei.order}
 % Author (editor) 名の first name を頭文字だけに略す。
 %
 FUNCTION {bst.first.name.initial}
-{ #0 }	  % #0 -> 略さない。 (default)
-% { #1 }    % #0 以外 -> first name を頭文字に略す。
+% { #0 }	  % #0 -> 略さない。 (default)
+{ #1 }    % #0 以外 -> first name を頭文字に略す。
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -186,7 +186,7 @@ FUNCTION {bst.mixed.order}
 % る。これも普通は変更しない．
 FUNCTION {bst.hide.month}
 { #0 }	  % #0 -> 表示する．普通はこちら． (default)
-% { #1 }    % #0 以外 -> 隠す (表示しない)
+%{ #1 }    % #0 以外 -> 隠す (表示しない)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -203,8 +203,8 @@ FUNCTION {bst.hide.number}
 % author-yearで変わらない)。
 %
 FUNCTION {bst.use.number.index}
-{ #0 }	  % Not use number index  (default)
-% { #1 }    % #0 以外 -> Use number index
+% { #0 }	  % Not use number index  (default)
+{ #1 }    % #0 以外 -> Use number index
 
 % number index の前に付ける文字列 (bst.use.number.indexに0以外を指定していると
 % きのみ有効)．
@@ -292,8 +292,8 @@ FUNCTION {bst.tatebo.definition}
 % #3 -> year は volume の後に表示されます。
 %
 FUNCTION {bst.year.position}
-{ #0 }	  % autho のすぐ後 (default).
-% { #1 }    % 最後（note の前）
+% { #0 }	  % autho のすぐ後 (default).
+{ #1 }    % 最後（note の前）
 % { #2 }    % journal name の後（article entryのみ）
 % { #3 }    % volume の後（article entryのみ）
 
@@ -324,8 +324,8 @@ FUNCTION {bst.sort.year}
 % と一緒に利用すると表示がおかしくなるケースあり．
 %
 FUNCTION {bst.no.sort}
-% { #0 }    % 文献の順番を普通にソートする．(default)
-{ #1 }	  % 引用順に並べる．
+{ #0 }    % 文献の順番を普通にソートする．(default)
+% { #1 }	  % 引用順に並べる．
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -403,7 +403,7 @@ FUNCTION {bst.cite.and}
 % 引用部分の "Mr.A, Mr.B _ Mr.C" の "_" の部分に入る文字列
 %
 FUNCTION {bst.cite.ands}
-{ " and " }    % (default)
+{ ", and " }    % (default)
 
 % 複数の authors, editors の間の文字列 (日本語文献用)
 %
@@ -418,8 +418,8 @@ FUNCTION {bst.cite.and.jp}
 % 何人以上の著者がいるときに引用部分で et al.で省略するか。3人以上のとき
 % に略すときは #3 を指定。
 FUNCTION {bst.and.others.num}
-{ #3 }	  % 3人以上なら省略する。(default)
-% { #4 }
+% { #3 }	  % 3人以上なら省略する。(default)
+{ #4 }
 
 % 著者数がある値より大きい場合には、参考文献部分で著者の一部の名前しか表示されな
 % い。具体的には、著者数が N1 より大きい場合には、著者の中の最初の N2 人の名前だ
@@ -458,7 +458,8 @@ FUNCTION {bst.author.pre}
 % author の後に付ける文字列 (英語文献用)
 %
 FUNCTION {bst.author.post}
-{ "" }	  % (default)
+% { "" }	  % (default)
+{ ", " }
 
 % author の前に付ける文字列 (日本語文献用)
 %
@@ -468,21 +469,22 @@ FUNCTION {bst.author.pre.jp}
 % author の後に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.author.post.jp}
-{ "" }	  % (default)
+% { "" }	  % (default)
+{ ", " }
 
 %%% 日本語文献の author, editor の姓・名の間に入れる文字列 
 % (姓名のどちらか一方が一文字のケース)
 %
 FUNCTION {bst.sei.mei.one.jp}
-{ "" }	  % (default)
-% { "　" }
+% { "" }	  % (default)
+{ "　" }
 
 %%% 日本語文献の author, editor の姓・名の間に入れる文字列 
 % (姓・名とも二文字以上のケース)
 %
 FUNCTION {bst.sei.mei.two.jp}
-{ "" }	  % (default)
-% { " " }
+% { "" }	  % (default)
+{ " " }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -524,12 +526,14 @@ FUNCTION {bst.title.post}
 % title の前に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.title.pre.jp}
-{ "「" }    % (default)
+% { "「" }    % (default)
+{ "``" }
 
 % title の後に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.title.post.jp}
-{ "」，" }    % (default)
+% { "」，" }    % (default)
+{ ",''" }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	book 用 title
@@ -537,22 +541,26 @@ FUNCTION {bst.title.post.jp}
 % book の title 前に付ける文字列 (英語文献用)
 %
 FUNCTION {bst.book.pre}
-{ " \textit{ " }    % (default)
+% { " \textit{ " }    % (default)
+{ "``" }
 
 % book の title 後に付ける文字列 (英語文献用)
 %
 FUNCTION {bst.book.post}
-{ "}" }	   % (default)
+% { "}" }	   % (default)
+{ ",''" }
 
 % book の title 前に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.book.pre.jp}
-{ "『" }    % (default)
+% { "『" }    % (default)
+{ "``" }
 
 % book の title 後に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.book.post.jp}
-{ "』" }    % (default)
+% { "』" }    % (default)
+{ ",''" }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	booktitle
@@ -560,22 +568,26 @@ FUNCTION {bst.book.post.jp}
 % booktitle の前に付ける文字列 (英語文献用)
 %
 FUNCTION {bst.btitle.pre}
-{ " \textit{ " }    % (default)
+% { " \textit{ " }    % (default)
+{ "``" }
 
 % booktitle の後に付ける文字列 (英語文献用)
 %
 FUNCTION {bst.btitle.post}
-{ "}" }	   % (default)
+% { "}" }	   % (default)
+{ ",''" }
 
 % booktitle の前に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.btitle.pre.jp}
-{ "『" }    % (default)
+% { "『" }    % (default)
+{ "``" }
 
 % booktitle の後に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.btitle.post.jp}
-{ "』" }    % (default)
+%{ "』" }    % (default)
+{ ",''" }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	journal name
@@ -593,12 +605,12 @@ FUNCTION {bst.journal.post}
 % journal name の前に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.journal.pre.jp}
-{ "『" }    % (default)
+{ " " }    % (default)
 
 % journal name の後に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.journal.post.jp}
-{ "』" }    % (default)
+{ "" }    % (default)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	editor 記号
@@ -744,15 +756,25 @@ FUNCTION {bst.pages.post}
 FUNCTION {bst.page.post}
 { "" }	  % (default)
 
+% page の前に付ける文字列  (複数ページ) (日本語文献用)
+%
+FUNCTION {bst.pages.pre.jp}
+{ ", pp" }    % (default)
+
 % page の前に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.page.pre.jp}
-{ "，" }    % (default)
+{ ", p" }    % (default)
+
+% page の後に付ける文字列 (複数ページ) (日本語文献用)
+%
+FUNCTION {bst.pages.post.jp}
+{ "" }	  % (default)
 
 % page の後に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.page.post.jp}
-{ "頁" }    % (default)
+{ "" }    % (default)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	chapter
@@ -783,7 +805,8 @@ FUNCTION {bst.chapter.post.jp}
 % month の前に付ける文字列 (英語文献用)
 %
 FUNCTION {bst.month.pre}
-{ ", " }    % (default)
+%{ ", " }    % (default)
+{ " " }
 
 % month の後に付ける文字列 (英語文献用)
 %
@@ -793,7 +816,8 @@ FUNCTION {bst.month.post}
 % month の前に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.month.pre.jp}
-{ "，" }    % (default)
+%{ "，" }    % (default)
+{ " " }
 
 % month の後に付ける文字列 (日本語文献用)
 %
@@ -838,7 +862,8 @@ FUNCTION {bst.publisher.post}
 % publisher の前に付ける文字列 (日本語文献用)
 %
 FUNCTION {bst.publisher.pre.jp}
-{ "，" }    % (default)
+%{ "，" }    % (default)
+{ "" }
 
 % publisher の後に付ける文字列 (日本語文献用)
 %
@@ -1560,8 +1585,8 @@ FUNCTION {output.check.nocomma}
 %%% period を付けて、改行する。
 FUNCTION {fin.entry}
 { is.kanji.entry
-    { add.kanji.period.x }
-    { add.period.x }
+    %{ add.kanji.period.x }
+    %{ add.period.x }
   if$
   write$
   newline$
@@ -2869,7 +2894,7 @@ FUNCTION {format.pages}
     { "" }
     { is.kanji.entry
 	{ pages multi.page.check
-	  { bst.page.pre.jp pages n.dashify convert.num.pages * bst.page.post.jp * }
+	  { bst.pages.pre.jp pages n.dashify convert.num.pages * bst.pages.post.jp * }
 	  { bst.page.pre.jp pages convert.num.pages * bst.page.post.jp * }
 	 if$
 	}
@@ -3439,6 +3464,34 @@ FUNCTION {test}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	 article の処理
+%FUNCTION {article}
+%{ output.bibitem
+%  format.authors "author" output.check.nocomma
+%  bst.year.position #0 =
+%    { format.year "year" output.check.nocomma }
+%    'skip$
+%  if$
+%  format.title "title" output.check.nocomma
+%
+%  format.journal "journal" output.check.nocomma
+%  bst.year.position #2 =
+%    { format.date output.nocomma }
+%    'skip$
+%  if$
+%
+%  format.vol.num.pages output.nocomma
+%
+%  bst.year.position #1 =
+%    { format.date output.nocomma }
+%    { format.month output.nocomma }
+%  if$
+%  %format.year  output.nocomma
+%
+%  %format.url.doi output.nocomma
+%  %format.note output.nocomma
+%  fin.entry
+%}
+
 FUNCTION {article}
 { output.bibitem
   format.authors "author" output.check.nocomma
@@ -3480,23 +3533,23 @@ FUNCTION {book}
     'skip$
   if$
   format.book "title" output.check.nocomma
+  format.edition output.nocomma
 
   format.translator output.nocomma
   format.bvolume output.nocomma
   format.number.series output.nocomma
   output.publisher.address
 
-  format.edition output.nocomma
-  format.book.pages output.nocomma
-
   bst.year.position #0 = not
     { format.year "year" output.check.nocomma }
     'skip$
   if$
   
-  format.url.doi output.nocomma
-  format.note output.nocomma
-  format.hoyakusho output.nocomma
+  format.book.pages output.nocomma
+
+  %format.url.doi output.nocomma
+  %format.note output.nocomma
+  %format.hoyakusho output.nocomma
   fin.entry
 }
 
@@ -3534,7 +3587,6 @@ FUNCTION {inbook}
   format.edition output.nocomma
 
   format.bvolume output.nocomma
-  format.chapter.pages "chapter and pages" output.check.nocomma
   format.number.series output.nocomma
   output.publisher.address
 
@@ -3543,9 +3595,11 @@ FUNCTION {inbook}
     'skip$
   if$
 
-  format.url.doi output.nocomma
+  format.chapter.pages "chapter and pages" output.check.nocomma
 
-  format.note output.nocomma
+  %format.url.doi output.nocomma
+
+  %format.note output.nocomma
   fin.entry
 }
 
@@ -3563,17 +3617,18 @@ FUNCTION {incollection}
   format.in.ed.booktitle "booktitle" output.check.nocomma
   format.bvolume output.nocomma
   format.edition output.nocomma
-  format.chapter.pages output.nocomma
-  output.address.organization.publisher
+  %output.address.organization.publisher
 
   bst.year.position #0 = not
     { format.year "year" output.check.nocomma }
     'skip$
   if$
 
-  format.url.doi output.nocomma
+  format.chapter.pages output.nocomma
 
-  format.note output.nocomma
+  %format.url.doi output.nocomma
+
+  %format.note output.nocomma
   fin.entry
 }
 
@@ -3591,17 +3646,19 @@ FUNCTION {inproceedings}
   format.in.ed.booktitle "booktitle" output.check.nocomma
   format.bvolume output.nocomma
   format.number.series output.nocomma
-  format.pages output.nocomma
-  output.address.organization.publisher
+  %output.address.organization.publisher
 
   bst.year.position #0 = not
-    { format.date output.nocomma }
-    { format.month output.nocomma }
+    %{ format.date output.nocomma }
+    %{ format.month output.nocomma }
+    { format.year output.nocomma }
   if$
 
-  format.url.doi output.nocomma
+  format.pages output.nocomma
 
-  format.note output.nocomma
+  %format.url.doi output.nocomma
+
+  %format.note output.nocomma
   fin.entry
 }
 
@@ -3692,13 +3749,14 @@ FUNCTION {misc}
   remove.irrelevant.kutoten
 
   bst.year.position #0 = not
-    { format.date output.nocomma }
-    { format.month output.nocomma }
+    %{ format.date output.nocomma }
+    %{ format.month output.nocomma }
+    { format.year output.nocomma }
   if$
 
-  format.url.doi output.nocomma
+  %format.url.doi output.nocomma
 
-  format.note output.nocomma
+  %format.note output.nocomma
   fin.entry
   empty.misc.check
 }
@@ -3718,13 +3776,14 @@ FUNCTION {online}
   remove.irrelevant.kutoten
 
   bst.year.position #0 = not
-    { format.date output.nocomma }
-    { format.month output.nocomma }
+    %{ format.date output.nocomma }
+    %{ format.month output.nocomma }
+    { format.year output.nocomma }
   if$
 
   format.url.doi output.nocomma
 
-  format.note output.nocomma
+  %format.note output.nocomma
   fin.entry
   empty.misc.check
 }
@@ -3824,7 +3883,8 @@ FUNCTION {unpublished}
   format.title "title" output.check.nocomma
 
   bst.year.position #0 = not
-    { format.date remove.pre.comma.period output.nocomma }
+    %{ format.date remove.pre.comma.period output.nocomma }
+    { format.year output.nocomma }
     { month empty$
 	'skip$
 	{ format.month remove.pre.comma.period output.nocomma }
