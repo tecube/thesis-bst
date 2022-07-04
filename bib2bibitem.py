@@ -5,13 +5,17 @@ from bib_parser import ParserInput, bibfile
 class Article:
     def __init__(self, parsed_dict):
         self.citekey = parsed_dict['citekey']
-        self.author = parsed_dict['tags']['author'] if 'author' in parsed_dict['tags'] else ["NoName"]
+        self.author = parsed_dict['tags']['author'] if 'author' in parsed_dict['tags'] else ""
         self.title = parsed_dict['tags']['title'] if 'title' in parsed_dict['tags'] else ""
         self.journal = parsed_dict['tags']['journal'] if 'journal' in parsed_dict['tags'] else ""
         self.year = parsed_dict['tags']['year'] if 'year' in parsed_dict['tags'] else ""
         self.volume = parsed_dict['tags']['volume'] if 'volume' in parsed_dict['tags'] else ""
         self.number = parsed_dict['tags']['number'] if 'number' in parsed_dict['tags'] else ""
         self.pages = parsed_dict['tags']['pages'] if 'pages' in parsed_dict['tags'] else ""
+        self._split_authors()
+    
+    def _split_authors(self):
+        self.author = self.author.split(' and ')
 
     def to_bibitem(self) -> str:
         bibitem_text = ""
@@ -82,7 +86,7 @@ def generate():
     entries = instantiate_entries(entries)
 
     for ent in entries:
-        print(ent)
+        print(ent.to_bibitem())
 
 
 if __name__ == '__main__':
