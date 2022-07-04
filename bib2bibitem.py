@@ -1,4 +1,6 @@
 import re
+from bib_parser import ParserInput, bibfile
+
 
 class Article:
     def __init__(self, parsed_dict):
@@ -57,29 +59,31 @@ class Book:
         return bibitem_text
 
 
-class Bibfile:
-    def __init__(self):
-        pass
+def instantiate_entries(entries: list[dict]):
+    entry_class = {
+        'article': Article,
+        'book': Book,
+    }
 
-    def load(self, path: str):
-        pass
-
-
-class Generator:
-    def __init__(self):
-        pass
+    instances = []
+    for ent in entries:
+        inst = entry_class[ent['entry_type']](ent)
+        instances.append(inst)
     
-    def generate(self):
-        bibfile = Bibfile()
-        entries = bibfile.load(filename)
+    return instances
 
-        output = ''
-        for entry in entries:
-            output += entry.to_bibitem()
 
-        print(output)
+def generate():
+    bibfile_path = 'test.bib'
+
+    src = ParserInput(src_path=bibfile_path)
+    entries = bibfile(src)
+
+    entries = instantiate_entries(entries)
+
+    for ent in entries:
+        print(ent)
 
 
 if __name__ == '__main__':
-    g = Generator()
-    g.generate()
+    generate()
