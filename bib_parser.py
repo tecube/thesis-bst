@@ -2,25 +2,8 @@ from typing import Any, Callable
 
 
 class ParserInput:
-    def __init__(self, src_str: str=None, src_path: str=None):
-        if src_str is None and src_path is None:
-            raise ValueError('input must be specified as a string or a filename.')
-        
-        elif src_str is not None:
-            self.load_from_str(src_str)
-        
-        elif src_path is not None:
-            self.load_from_file(src_path)
-        
-        else: # never enter
-            pass
-    
-    def load_from_file(self, path: str):
-        with open(path, mode='r') as f:
-            all_content = f.read()
-        
-        self.src = all_content
-        self.pos = 0
+    def __init__(self, src_str):
+        self.load_from_str(src_str)
     
     def load_from_str(self, s: str):
         self.src = s
@@ -34,6 +17,13 @@ class ParserInput:
     
     def pop(self, n: int):
         self.pos += n
+
+
+class ParsedEntry:
+    def __init__(self, entry_type: str, citekey: str, tags: dict[str, str]):
+        self.entry_type = entry_type
+        self.citekey = citekey
+        self.tags = tags
 
 
 #########################
@@ -217,20 +207,19 @@ def tag(src: ParserInput):
 
 
 def entry(src: ParserInput):
-    result = {'entry_type': '', 'citekey': '', 'tags': dict()}
-
     char_seq('@')(src)
-    result['entry_type'] = entry_type(src)
+    ent_type = entry_type(src)
 
     char_seq('{')(src)
-    result['citekey'] = citekey(src)
+    key = citekey(src)
     char_seq(',')(src)
 
     many(whitespace)(src)
 
+    tags = dict()
     while True:
         try:
-            result['tags'].update(tag(src))
+            tags.update(tag(src))
             char_seq(',')(src)
         except ValueError:
             break
@@ -238,11 +227,11 @@ def entry(src: ParserInput):
     many(whitespace)(src)
     char_seq('}')(src)
 
-    return result
+    return ParsedEntry(ent_type, key, tags)
 
 
 def bibfile(src: ParserInput):
-    entries: list[dict] = []
+    entries: list[ParsedEntry] = []
     try:
         while True:
             many(whitespace)(src)
