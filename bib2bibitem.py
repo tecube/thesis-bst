@@ -103,13 +103,14 @@ def generate(bibfile_path: pathlib.Path):
 
     entries = bibfile(src)
 
-    formatters = instantiate_formatters(entries)
-
-    for ent in formatters:
-        print(ent.to_bibitem())
+    return instantiate_formatters(entries)
 
 
 if __name__ == '__main__':
     args = get_args()
     bibfile_path = pathlib.Path(args.bibfile)
-    generate(bibfile_path)
+
+    formatters = generate(bibfile_path)
+
+    for ent in formatters:
+        print(ent.to_bibitem())
