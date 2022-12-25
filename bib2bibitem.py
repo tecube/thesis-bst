@@ -1,7 +1,7 @@
 import argparse
 import pathlib
 import re
-from bib_parser import ParserInput, ParsedEntry, bibfile
+from bibparser import ParserInput, ParsedEntry, bibfile
 
 
 def get_args():

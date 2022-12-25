@@ -9,13 +9,13 @@ class ParserInput:
         self.src = s
         self.pos = 0
     
-    def next(self, n: int): # just peak, not pop (use pop(n) to consume the n characters)
+    def peak(self, n: int): # just peak, not consume (use consume(n) to consume the n characters)
         slice = self.src[self.pos:self.pos+n]
         if slice == '': # EOF
             raise EOFError('Parser reached the end of the input string.')
         return slice
     
-    def pop(self, n: int):
+    def consume(self, n: int):
         self.pos += n
 
 
@@ -34,11 +34,11 @@ def char_seq(s: str):
     l = len(s)
 
     def parser_func(src: ParserInput):
-        if src.next(l) == s:
-            src.pop(l)
+        if src.peak(l) == s:
+            src.consume(l)
             return s
         else:
-            raise ValueError(f'Error in parsing "seq({s})": {src.next(10)} not starts with "{s}".')
+            raise ValueError(f'Error in parsing "seq({s})": {src.peak(10)} not starts with "{s}".')
     
     return parser_func
 
@@ -106,27 +106,27 @@ def zero_or_one(parser_func: Callable[[ParserInput,], str]):
 #######################
 
 def whitespace(src: ParserInput):
-    c = src.next(1)
+    c = src.peak(1)
     if c in ' \t\n\r':
-        src.pop(1)
+        src.consume(1)
         return c
     else:
         raise ValueError(f'Error in parsing "whitespace": {c} is not a whitespace.')
 
 
 def alphabet(src: ParserInput):
-    c = src.next(1)
+    c = src.peak(1)
     if c in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ':
-        src.pop(1)
+        src.consume(1)
         return c
     else:
         raise ValueError(f'Error in parsing "alphabet": {c} is not an alphabet.')
 
 
 def digit(src: ParserInput):
-    c = src.next(1)
+    c = src.peak(1)
     if c in '0123456789':
-        src.pop(1)
+        src.consume(1)
         return c
     else:
         raise ValueError(f'Error in parsing "digit": {c} is not a digit.')
@@ -134,14 +134,14 @@ def digit(src: ParserInput):
 
 def punctuation(exclude: str=''):
     def parser_func(src: ParserInput):
-        c = src.next(1)
+        c = src.peak(1)
 
         candidates = '''!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~'''
         for i in range(len(exclude)):
             candidates = candidates.replace(exclude[i], '')
 
         if c in candidates:
-            src.pop(1)
+            src.consume(1)
             return c
         else:
             raise ValueError(f'Error in parsing "punctuation": {c} is not a punctuation.')
