@@ -43,17 +43,6 @@ def char_seq(s: str):
     return parser_func
 
 
-def parser_seq(parser_func_list: list[Callable[[ParserInput,], Any]]):
-    def new_parser_func(src: ParserInput):
-        out_seq = []
-        for parser in parser_func_list:
-            out = parser(src)
-            out_seq.append(out)
-        return out_seq
-    
-    return new_parser_func
-
-
 def many(parser_func: Callable[[ParserInput,], str]):
     def new_parser_func(src: ParserInput):
         seq: str = ''
