@@ -57,7 +57,7 @@ class Book(EntryFormatter):
         self.journal = ent.tags['journal'] if'journal' in ent.tags else ""
         self.year = ent.tags['year'] if 'year' in ent.tags else ""
         self.pages = ent.tags['pages'] if 'pages' in ent.tags else ""
-    
+
     def to_bibitem(self) -> str:
         bibitem_text = ""
         bibitem_text += "\\bibitem{" + self.citekey + "} "
@@ -86,7 +86,7 @@ def instantiate_formatters(entries: list[ParsedEntry]):
     for ent in entries:
         inst = entry_class[ent.entry_type](ent)
         instances.append(inst)
-    
+
     return instances
 
 

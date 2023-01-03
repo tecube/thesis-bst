@@ -4,17 +4,17 @@ from typing import Any, Callable
 class ParserInput:
     def __init__(self, src_str):
         self.load_from_str(src_str)
-    
+
     def load_from_str(self, s: str):
         self.src = s
         self.pos = 0
-    
+
     def peak(self, n: int): # just peak, not consume (use consume(n) to consume the n characters)
         slice = self.src[self.pos:self.pos+n]
         if slice == '': # EOF
             raise EOFError('Parser reached the end of the input string.')
         return slice
-    
+
     def consume(self, n: int):
         self.pos += n
 
@@ -39,7 +39,7 @@ def char_seq(s: str):
             return s
         else:
             raise ValueError(f'Error in parsing "seq({s})": {src.peak(10)} not starts with "{s}".')
-    
+
     return parser_func
 
 
@@ -86,7 +86,7 @@ def zero_or_one(parser_func: Callable[[ParserInput,], str]):
             return parser_func(src)
         except ValueError:
             return ''
-    
+
     return new_parser_func
 
 
