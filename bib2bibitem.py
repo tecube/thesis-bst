@@ -19,7 +19,7 @@ class Article(EntryFormatter):
         self.citekey = ent.citekey
         self.author = ent.tags['author'] if 'author' in ent.tags else ""
         self.title = ent.tags['title'] if 'title' in ent.tags else ""
-        self.journal = ent.tags['journal'] if 'journa' in ent.tags else ""
+        self.journal = ent.tags['journal'] if 'journal' in ent.tags else ""
         self.year = ent.tags['year'] if 'year' in ent.tags else ""
         self.volume = ent.tags['volume'] if 'volume' in ent.tags else ""
         self.number = ent.tags['number'] if 'number' in ent.tags else ""
@@ -54,9 +54,13 @@ class Book(EntryFormatter):
         self.citekey = ent.citekey
         self.author = ent.tags['author'] if 'author' in ent.tags else ["NoName"]
         self.title = ent.tags['title'] if 'title' in ent.tags else ""
-        self.journal = ent.tags['journal'] if'journal' in ent.tags else ""
+        self.publisher = ent.tags['publisher'] if 'publisher' in ent.tags else ""
         self.year = ent.tags['year'] if 'year' in ent.tags else ""
         self.pages = ent.tags['pages'] if 'pages' in ent.tags else ""
+        self._split_authors()
+
+    def _split_authors(self):
+        self.author = self.author.split(' and ')
 
     def to_bibitem(self) -> str:
         bibitem_text = ""
@@ -64,7 +68,7 @@ class Book(EntryFormatter):
         for auth in self.author:
             bibitem_text += auth + ", "
         bibitem_text += "``" + self.title + ",'' " if self.title != "" else ""
-        bibitem_text += self.journal + " " if self.journal != "" else ""
+        bibitem_text += self.publisher + " " if self.publisher != "" else ""
         bibitem_text += "(" + self.year + "), " if self.year != "" else ""
         if re.search(r"[0-9]\-[0-9]", self.pages):
             bibitem_text += "pp. " + self.pages.replace('-', '--') + " "
