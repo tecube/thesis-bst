@@ -159,6 +159,12 @@ def test_many_rejected():
     pass
 
 
+def test_many_eof():
+    inst = ParserInput('abc')
+    parser = bibparser.many(bibparser.alphabet)
+    assert parser(inst) == 'abc'
+
+
 def test_many1_not_matched():
     inst = ParserInput('0192 bar')
     pos_before = inst.pos

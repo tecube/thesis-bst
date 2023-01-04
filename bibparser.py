@@ -49,7 +49,7 @@ def many(parser_func: Callable[[ParserInput,], str]):
         try:
             while True:
                 seq += parser_func(src)
-        except ValueError:
+        except (ValueError, EOFError) :
             pass
         return seq
 
