@@ -1,7 +1,12 @@
-#import unittest
-#import bib_parser as bp
+import filecmp
+import bib2bibitem
 
 
-#class TestParserInput(unittest.TestCase):
-    #def test_next(self):
-        #pi = bp.ParserInput()
+def test_inout(tmp_path):
+    tmp_output_path = tmp_path.joinpath('test_output.tex')
+
+    with open(tmp_output_path, mode='a', encoding='utf-8') as f:
+        formatters = bib2bibitem.parse('test_input.bib')
+        bib2bibitem.generate(formatters, f)
+
+    filecmp.cmp(tmp_output_path, 'test_output.tex')

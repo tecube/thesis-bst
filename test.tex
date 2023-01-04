@@ -1,0 +1,23 @@
+
+\documentclass{ltjsarticle}
+\usepackage{luatexja}
+\usepackage{listings}
+
+\begin{document}
+
+\section{出力テスト}
+
+bib2bibitem.pyの出力をinputしてレンダリング結果を確認するための.texファイル。
+\begin{lstlisting}[basicstyle=\ttfamily]
+    python bib2bibitem.py <input .bib file> -o output.tex
+\end{lstlisting}
+を実行し、以下のコメントアウトをトグルしてこのファイルをlualatexでコンパイルすると結果が確認できる。
+
+\begin{thebibliography}{99} 
+
+\input{test_output.tex}
+%\input{output.tex}
+
+\end{thebibliography}
+
+\end{document}

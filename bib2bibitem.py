@@ -124,7 +124,7 @@ if __name__ == '__main__':
     if args.output is None:
         output_file = sys.stdout
     else:
-        output_file = open(args.output, mode='a', encoding='utf-8')
+        output_file = open(args.output, mode='a', encoding='utf-8') # assuming the file is closed when the program terminates
 
     formatters = parse(bibfile_path)
     generate(formatters, output_file)
