@@ -1,6 +1,7 @@
 import argparse
 import pathlib
 import re
+import sys
 from bibparser import ParserInput, ParsedEntry, bibfile
 
 
@@ -101,7 +102,7 @@ def str_from_file(filepath: pathlib.Path):
     return all_content
 
 
-def generate(bibfile_path: pathlib.Path):
+def parse(bibfile_path: pathlib.Path):
     bib = str_from_file(bibfile_path)
     src = ParserInput(bib)
 
@@ -110,11 +111,14 @@ def generate(bibfile_path: pathlib.Path):
     return instantiate_formatters(entries)
 
 
+def generate(formatters: list[EntryFormatter], outputfile):
+    for ent in formatters:
+        print(ent.to_bibitem(), file=outputfile)
+
+
 if __name__ == '__main__':
     args = get_args()
     bibfile_path = pathlib.Path(args.bibfile)
 
-    formatters = generate(bibfile_path)
-
-    for ent in formatters:
-        print(ent.to_bibitem())
+    formatters = parse(bibfile_path)
+    generate(formatters, sys.stdout)
