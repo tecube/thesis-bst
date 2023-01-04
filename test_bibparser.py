@@ -42,7 +42,7 @@ class TestParserInput: # a class just for grouping
         assert inst.peak(4) == 'st s'
 
 
-ALL_CHARS = ' \t\n\r' + 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' + '!"#$%&'+"'"+'()*+,-./:;<=>?@[\\]^_`{|}~'
+ASCII_CHARS = ' \t\n\r' + 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' + '!"#$%&'+"'"+'()*+,-./:;<=>?@[\\]^_`{|}~'
 class TestPrimitiveParsers:
     @classmethod
     def is_accepted(cls, parser_func: Callable, src_str: str, expected_retval: str):
@@ -72,7 +72,7 @@ class TestPrimitiveParsers:
     def test_whitespace_accepted(self, accepted_char):
         self.is_accepted(bibparser.whitespace, accepted_char, accepted_char)
 
-    @pytest.mark.parametrize('rejected_char', set(ALL_CHARS) - set(' \t\n\r'))
+    @pytest.mark.parametrize('rejected_char', set(ASCII_CHARS) - set(' \t\n\r'))
     def test_whitespace_rejected(self, rejected_char):
         self.is_rejected(bibparser.whitespace, rejected_char)
 
@@ -80,7 +80,7 @@ class TestPrimitiveParsers:
     def test_alphabet_accepted(self, accepted_char):
         self.is_accepted(bibparser.alphabet, accepted_char, accepted_char)
 
-    @pytest.mark.parametrize('rejected_char', set(ALL_CHARS) - set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+    @pytest.mark.parametrize('rejected_char', set(ASCII_CHARS) - set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'))
     def test_alphabet_rejected(self, rejected_char):
         self.is_rejected(bibparser.alphabet, rejected_char)
 
@@ -88,25 +88,33 @@ class TestPrimitiveParsers:
     def test_digit_accepted(self, accepted_char):
         self.is_accepted(bibparser.digit, accepted_char, accepted_char)
 
-    @pytest.mark.parametrize('rejected_char', set(ALL_CHARS) - set('0123456789'))
+    @pytest.mark.parametrize('rejected_char', set(ASCII_CHARS) - set('0123456789'))
     def test_digit_rejected(self, rejected_char):
         self.is_rejected(bibparser.digit, rejected_char)
 
-    @pytest.mark.parametrize('accepted_char', set('!"#$%&'+"'"+'()*+,-./:;<=>?@[\\]^_`{|}~'))
+    @pytest.mark.parametrize('accepted_char', set('''!"#$%&'()*+,-.:;<=>?@[]^_`{|}~/''' + '\\'))
     def test_punctuation_accepted(self, accepted_char):
         self.is_accepted(bibparser.punctuation(), accepted_char, accepted_char)
 
-    @pytest.mark.parametrize('rejected_char', set(ALL_CHARS) - set('!"#$%&'+"'"+'()*+,-./:;<=>?@[\\]^_`{|}~'))
+    @pytest.mark.parametrize('rejected_char', set(ASCII_CHARS) - set('''!"#$%&'()*+,-.:;<=>?@[]^_`{|}~/''' + '\\'))
     def test_punctuation_rejected(self, rejected_char):
         self.is_rejected(bibparser.punctuation(), rejected_char)
 
-    @pytest.mark.parametrize('accepted_char', set('"#$%&'+"'"+'()*+,-./:;<=>@[\\]^_`{|}~'))
+    @pytest.mark.parametrize('accepted_char', set('''"#$%&'()*+,-.:;<=>@[]^_`{|}~/''' + '\\'))
     def test_punctuation_accepted_with_exception(self, accepted_char):
         self.is_accepted(bibparser.punctuation('!?'), accepted_char, accepted_char)
 
-    @pytest.mark.parametrize('rejected_char', set(ALL_CHARS) - set('"#$%&'+"'"+'()*+,-./:;<=>@[\\]^_`{|}~'))
+    @pytest.mark.parametrize('rejected_char', set(ASCII_CHARS) - set('''"#$%&'()*+,-.:;<=>@[]^_`{|}~/''' + '\\'))
     def test_punctuation_rejected_with_exception(self, rejected_char):
         self.is_rejected(bibparser.punctuation('!?'), rejected_char)
+
+    @pytest.mark.parametrize('accepted_char', set('テスト'))
+    def test_non_ascii_accepted(self, accepted_char):
+        self.is_accepted(bibparser.non_ascii, accepted_char, accepted_char)
+
+    @pytest.mark.parametrize('rejected_char', set(ASCII_CHARS))
+    def test_non_ascii_rejected(self, rejected_char):
+        self.is_rejected(bibparser.non_ascii, rejected_char)
 
 
 def test_char_seq_accepted():

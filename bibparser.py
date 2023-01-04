@@ -125,7 +125,7 @@ def punctuation(exclude: str=''):
     def parser_func(src: ParserInput):
         c = src.peak(1)
 
-        candidates = '''!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~'''
+        candidates = '''!"#$%&'()*+,-.:;<=>?@[]^_`{|}~/''' + '\\'
         for i in range(len(exclude)):
             candidates = candidates.replace(exclude[i], '')
 
@@ -136,6 +136,15 @@ def punctuation(exclude: str=''):
             raise ValueError(f'Error in parsing "punctuation": {c} is not a punctuation.')
 
     return parser_func
+
+
+def non_ascii(src: ParserInput):
+    c = src.peak(1)
+    if c.isascii():
+        raise ValueError(f'Error in parsing "non_ascii": {c} is an ascii character.')
+    else:
+        src.consume(1)
+        return c
 
 
 #######################
@@ -163,7 +172,7 @@ def citekey(src: ParserInput):
 def braced_string(src: ParserInput):
     braced = ''
     braced += char_seq('{')(src)
-    braced += many(oneof([whitespace, alphabet, digit, punctuation(exclude='{}'), braced_string]))(src)
+    braced += many(oneof([whitespace, alphabet, digit, punctuation(exclude='{}'), non_ascii, braced_string]))(src)
     braced += char_seq('}')(src)
     return braced
 
@@ -171,7 +180,7 @@ def braced_string(src: ParserInput):
 def doublequoted_string(src: ParserInput):
     dquoted = ''
     dquoted += char_seq('"')(src)
-    dquoted += many(oneof(whitespace, alphabet, digit, punctuation))(src)
+    dquoted += many(oneof(whitespace, alphabet, digit, punctuation, non_ascii))(src)
     dquoted += char_seq('"')(src)
     return dquoted
 

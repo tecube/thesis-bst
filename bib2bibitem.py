@@ -92,7 +92,7 @@ def instantiate_formatters(entries: list[ParsedEntry]):
 
 def str_from_file(filepath: pathlib.Path):
     # assuming the file is not too large
-    with open(filepath, mode='r') as f:
+    with open(filepath, mode='r', encoding='utf-8') as f:
         all_content = f.read()
     return all_content
 
