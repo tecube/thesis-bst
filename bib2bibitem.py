@@ -8,6 +8,7 @@ from bibparser import ParserInput, ParsedEntry, bibfile
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('bibfile', type=str, help='path to the .bib file to be converted')
+    parser.add_argument('-o', '--output', type=str, help='path to the output .tex file (just a snippet supposed to be used with "\\input{}" command in the main tex file)')
     return parser.parse_args()
 
 
@@ -120,5 +121,10 @@ if __name__ == '__main__':
     args = get_args()
     bibfile_path = pathlib.Path(args.bibfile)
 
+    if args.output is None:
+        output_file = sys.stdout
+    else:
+        output_file = open(args.output, mode='a', encoding='utf-8')
+
     formatters = parse(bibfile_path)
-    generate(formatters, sys.stdout)
+    generate(formatters, output_file)
