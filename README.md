@@ -27,7 +27,7 @@ pyinstaller.exe .\bib2bibitem.py --onefile
 ## 使い方
 1. 参考文献を普通のbibtexの流儀に従って.bibファイルにまとめる
 2. `bib2bibitem.exe <.bib file> -o <output file>`または`python bib2bibitem.py <.bib file> -o <output file>`を実行する
-3. output fileを論文内でinputする（参考：test.tex）
+3. output fileを論文内でinputする（参考：test/render_check.tex）
 
 `-o`オプションを省くと結果を標準出力に出力します。簡単な確認や、手でのコピペを想定した動作です。
 
